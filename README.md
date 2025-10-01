@@ -182,7 +182,6 @@ This project was developed as part of the Graduate Diploma in Software Analytics
 - [Aung Myin Moe](https://github.com/Ammmoe)
 - [Muhammad Haziq Bin Jamil](https://github.com/haziqjamil1)
 - [Li Xing Bang](https://github.com/coderbang-bang)
-- Zhang Rui
 ---
 
 ## 📄 License
