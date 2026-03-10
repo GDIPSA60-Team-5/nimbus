@@ -1,202 +1,333 @@
+
 # Nimbus 🚌
+### AI-Powered Public Transport Companion
 
-> An intelligent public transportation companion app with AI-powered assistance
+![Android](https://img.shields.io/badge/Android-Kotlin-green)
+![Backend](https://img.shields.io/badge/Backend-SpringBoot-green)
+![AI](https://img.shields.io/badge/AI-FastAPI-blue)
+![Frontend](https://img.shields.io/badge/Web-Next.js-black)
+![License](https://img.shields.io/badge/license-Educational-lightgrey)
 
+Nimbus is an **AI-powered public transportation assistant** designed to help commuters navigate Singapore’s transit network using **natural language queries, real-time bus data, and intelligent route planning**.
 
-## 🚀 Setup Instructions
+This project demonstrates a **full-stack distributed architecture** integrating:
 
-> **For Lecturers/Evaluators**: Please check and update the following configuration files:
+- Mobile application
+- Web dashboard
+- Microservice backend
+- AI/NLP inference service
+- DevOps infrastructure
 
-### Configuration Files to Update
-
-1. **Android App** (`android-kotlin/local.properties`):
-   - Check `MAPS_API_KEY` for Google Maps integration
-
-2. **Spring Backend**:
-   - Check `spring-backend/application.properties` for database and API configurations
-   - Check `spring-backend/.env` for environment-specific variables
-   - **Update `ONEMAP_API_TOKEN`** - the provided token expires in 3 days
-
-3. **Next.js Frontend** (`next-frontend/.env.local`):
-   - Update backend URLs if running on different ports/hosts
-
-4. **LLM Backend** (`llm-backend/.env`):
-   - Update `BACKEND_URL` to match your backend deployment
+Built as part of the **NUS Graduate Diploma in Software Analytics (GdipSA)**.
 
 ---
 
-## ✨ Features
+# 🚀 Demo
 
-### 🤖 AI-Powered Chatbot
-- Natural language query processing for transit information
-- Intent classification using TF-IDF and embeddings
-- Multi-user conversation support
-- Real-time route suggestions and bus timings
+## Mobile App
 
-### 🗺️ Smart Navigation
-- Real-time GPS tracking and route guidance
-- Voice-guided turn-by-turn directions
-- Offline map support with custom styling
-- Bus arrival predictions and live updates
+<p align="center">
+<img src=".github/images/login_screen.png" width="260"/>
+<img src=".github/images/landing_page.png" width="260"/>
+<img src=".github/images/chatbot_landing.png" width="260"/>
+<img src=".github/images/chatbot_screen.png" width="260"/>
+</p>
 
-### 📱 Mobile Experience
-- **Home Dashboard**: Quick access to saved routes and recent trips
-- **Route Planning**: Intelligent multi-modal journey planning
-- **Location Management**: Save frequently visited places
-- **Trip History**: Track and analyze travel patterns
-- **Push Notifications**: Alerts for bus arrivals and service updates
+<!-- ---
 
-### 💻 Web Admin Dashboard
-- User analytics and usage statistics
+## Web Dashboard
+
+<p align="center">
+<img src=".github/images/landing_page.png" width="800"/>
+</p>
+
+--- -->
+
+# ✨ Features
+
+## 🤖 AI Transit Chatbot
+
+Users can ask transit questions in **natural language**.
+
+Examples:
+
+```text
+"When is the next bus from Kent Ridge MRT?"
+"How do I get to Orchard Road?"
+"What buses arrive at this stop?"
+```
+
+Capabilities:
+
+- Intent classification using **TF-IDF**
+- Semantic similarity via **Sentence Transformers**
+- Multi-user conversation handling
+- LLM-powered fallback responses
+- Integration with transit APIs
+
+---
+
+## 🗺️ Smart Route Navigation
+
+- Real-time GPS navigation
+- Bus arrival predictions
+- Route planning with transit APIs
+- Offline map styling
+- Voice guidance
+
+---
+
+## 📱 Android Mobile App
+
+Key modules:
+
+- Home dashboard
+- Smart route planner
+- Chatbot interface
+- Saved locations
+- Trip history
+- Push notifications
+
+Built using **clean architecture with Kotlin modules**.
+
+---
+
+## 💻 Admin Web Dashboard
+
+Provides operational insights:
+
+- User analytics
 - Chatbot interaction monitoring
-- Feedback management system
-- Real-time system health monitoring
-- Prometheus metrics integration
-
-### 🔐 Security & Authentication
-- JWT-based authentication
-- Firebase integration for user management
-- Secure API endpoints with Spring Security
-- Role-based access control
+- Feedback tracking
+- System metrics dashboard
+- Real-time health monitoring
 
 ---
 
-## 🛠️ Technology Stack
+# 🏗 System Architecture
 
-### Mobile Application
-- **Framework**: Android (Kotlin)
-- **Architecture**: Multi-module clean architecture
-- **UI**: Material Design components
-- **Maps**: Google Maps SDK
-- **Networking**: Retrofit, OkHttp
-- **Authentication**: Firebase Auth
+```mermaid
+flowchart LR
 
-### Web Frontend
-- **Framework**: Next.js 15
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **State Management**: React Context
-- **Charts**: Custom chart components
-- **Authentication**: JWT with HTTP-only cookies
+A[Android App<br>Kotlin] --> C[Spring Boot Backend]
 
-### Backend Services
-- **API Server**: Spring Boot 3.5 (Java 17)
-- **Database**: MongoDB with Reactive Streams
-- **Security**: Spring Security, JWT
-- **Monitoring**: Spring Actuator, Prometheus
-- **Messaging**: Firebase Cloud Messaging
+B[Next.js Dashboard] --> C
 
-### AI/ML Backend
-- **Framework**: FastAPI (Python)
-- **LLM**: GPT4All for local inference
-- **NLP**: Sentence Transformers, scikit-learn
-- **Intent Classification**: TF-IDF, embeddings
-- **Data Processing**: Pandas, NumPy
+C --> D[MongoDB]
 
-### Infrastructure & DevOps
-- **Containerization**: Docker, Docker Compose
-- **Orchestration**: Ansible playbooks
-- **Infrastructure**: Terraform
-- **Monitoring**: Prometheus, Grafana
-- **CI/CD**: GitHub Actions
-- **Code Quality**: SonarCloud integration
+C --> E[LLM Backend<br>FastAPI]
 
----
+E --> F[Sentence Transformers]
+E --> G[TF-IDF Classifier]
 
-## 🏗️ Architecture
+C --> H[External APIs]
 
-### System Overview
-```
-┌─────────────────┐              ┌──────────────────┐
-│   Android App   │              │   Next.js Web    │
-│    (Kotlin)     │              │    Dashboard     │
-└─────────┬───────┘              └────────┬─────────┘
-          │                               │
-          └───────────────┬───────────────┘
-                          │
-          ┌───────────────▼───────────────┐
-          │       Spring Boot Backend     │
-          │  (Authentication, CRUD, API)  │
-          └─────────────┬─────────────────┘
-                        │
-          ┌─────────────▼─────────────┐ ┌─────────────────────────┐
-          │        MongoDB           │ │       LLM Backend        │
-          │   (User, Trip, Route)    │ │    (FastAPI + Meta LLAMA)│
-          └──────────────────────────┘ └─────────────┬───────────┘
-                                                     │
-          ┌──────────────────────────────────────────▼─────────────┐
-          │                External APIs                           │
-          │      OneMap API, Firebase, Google Maps, Bus APIs      │
-          └────────────────────────────────────────────────────────┘
+H --> I[OneMap API]
+H --> J[LTA Bus Data]
+H --> K[Google Maps]
+H --> L[Firebase]
 ```
 
-### Key Design Patterns
-- **Clean Architecture**: Separation of concerns across layers
-- **Microservices**: Independent, scalable service components
-- **Event-Driven**: Reactive programming with MongoDB Reactive Streams
-- **API-First**: RESTful APIs with comprehensive documentation
+---
+
+# 🧠 AI / NLP Pipeline
+
+The chatbot uses a **hybrid AI pipeline** designed for speed and reliability.
+
+```mermaid
+flowchart TD
+
+A[User Query]
+B[Text Preprocessing]
+C[TF-IDF Intent Classification]
+D[Sentence Embedding Similarity]
+E[Transit API Query]
+F[LLM Response Generation]
+G[Final Chatbot Response]
+
+A --> B
+B --> C
+C --> D
+D --> E
+E --> F
+F --> G
+```
+
+### Why Hybrid?
+
+Instead of relying entirely on LLMs:
+
+- **TF-IDF classifier** handles common queries efficiently
+- **Embeddings** detect semantic similarity
+- **LLM fallback** handles edge cases
+
+This design reduces latency and improves reliability.
 
 ---
 
-## 🔄 CI/CD Pipeline
+# 🛠 Technology Stack
 
-### Automated Workflows
-- **Code Quality**: SonarCloud analysis on every PR
-- **Testing**: Unit and integration tests
-- **Security**: Dependency vulnerability scanning
-- **Build**: Multi-platform Docker image builds
-- **Deployment**: Automated staging deployments
+## Mobile
+- Kotlin
+- Android SDK
+- Google Maps SDK
+- Retrofit
+- Firebase Cloud Messaging
 
-### Quality Gates
+## Backend
+- Spring Boot 3
+- Java 17
+- MongoDB Reactive
+- Spring Security
+- JWT Authentication
+
+## AI Service
+- FastAPI
+- Sentence Transformers
+- scikit-learn
+- GPT4All (local inference)
+
+## Web Dashboard
+- Next.js 15
+- TypeScript
+- TailwindCSS
+- React Context
+
+## DevOps
+- Docker
+- Terraform
+- Ansible
+- GitHub Actions
+- Prometheus
+- Grafana
+- SonarCloud
+
+---
+
+# 📂 Project Structure
+
+```text
+nimbus/
+│
+├── android-kotlin/      # Android mobile application
+├── spring-backend/      # Spring Boot API server
+├── llm-backend/         # FastAPI NLP service
+├── next-frontend/       # Next.js admin dashboard
+│
+├── infrastructure/
+│   ├── terraform/
+│   └── ansible/
+│
+├── docker-compose.yml
+└── .github/images/
+```
+
+---
+
+# ⚙️ Running the Project
+
+### Clone Repository
+
+```bash
+git clone https://github.com/yourusername/nimbus.git
+cd nimbus
+```
+
+### Start Services
+
+```bash
+docker-compose up --build
+```
+
+Services started:
+
+| Service | Port |
+|------|------|
+Spring Backend | 8080
+LLM Backend | 8000
+Next.js Dashboard | 3000
+
+---
+
+# 📊 Observability
+
+Nimbus includes built-in monitoring tools.
+
+- **Prometheus metrics**
+- **Spring Actuator health checks**
+- **Structured logging**
+- **Grafana dashboards**
+
+These provide visibility into:
+
+- API latency
+- chatbot usage
+- system performance
+- service health
+
+---
+
+# 🔄 CI/CD Pipeline
+
+GitHub Actions pipeline automatically runs:
+
+- Unit tests
+- Integration tests
+- SonarCloud code quality analysis
+- Dependency vulnerability scanning
+- Docker image builds
+- Deployment workflows
+
+Quality gates:
+
 - Test coverage > 80%
-- Zero critical security vulnerabilities
-- Code maintainability rating A
-- Successful integration tests
+- No critical vulnerabilities
+- Maintainability rating A
 
 ---
 
-## 📊 Monitoring & Analytics
+# ⚡ Engineering Challenges
 
-### Application Monitoring
-- **Metrics**: Prometheus with custom business metrics
-- **Logging**: Structured logging with correlation IDs
-- **Health Checks**: Spring Actuator endpoints
-- **Performance**: Response time and throughput monitoring
+### Designing an AI Chatbot Without Full LLM Dependency
+Instead of using only large language models, the system uses a **hybrid NLP pipeline** combining classical ML and embeddings for lower latency.
 
-### User Analytics
-- **Usage Patterns**: Route planning frequency and preferences
-- **Chatbot Metrics**: Query success rates and user satisfaction
-- **Feature Adoption**: A/B testing for new features
-- **Error Tracking**: Real-time error monitoring and alerting
+### Real-Time Transit Data Integration
+Transit APIs often introduce latency or incomplete data. The system implements fallback strategies and caching.
 
----
+### Multi-Service Architecture
+The system coordinates **four separate services**:
 
-## 🤝 Contributors
+- Android client
+- Spring backend
+- AI inference service
+- Web admin dashboard
 
-**GdipSA60 Team 5**
+### Mobile + AI + Backend Integration
+Ensuring reliable communication between:
 
-This project was developed as part of the Graduate Diploma in Software Analytics (GdipSA60) program at the National University of Singapore (NUS).
-
-### Team Members
-- [Phyo Nyi Nyi Paing](https://github.com/paulphyo)
-- [Aung Myin Moe](https://github.com/Ammmoe)
-- [Muhammad Haziq Bin Jamil](https://github.com/haziqjamil1)
-- [Li Xing Bang](https://github.com/coderbang-bang)
----
-
-## 📄 License
-
-This project is developed for educational purposes as part of the NUS GdipSA60 program.
+- mobile clients
+- REST APIs
+- AI inference pipelines
 
 ---
 
-## 🙏 Acknowledgments
+# 👨‍💻 Contributors
 
-- **OneMap API** for Singapore geospatial data
-- **Land Transport Authority (LTA)** for real-time transport data
-- **Firebase** for authentication and push notification services
-- **Google Maps Platform** for mapping and location services
+Developed by **GdipSA60 Team 5 — National University of Singapore**
+
+- Phyo Nyi Nyi Paing
+- Aung Myin Moe
+- Muhammad Haziq Bin Jamil
+- Li Xing Bang
 
 ---
 
-*Built with ❤️ by GdipSA60 Team 5*
+# 📄 License
+
+Educational project developed as part of the **NUS Graduate Diploma in Software Analytics**.
+
+---
+
+# ⭐ If You Like This Project
+
+Consider starring the repository!
